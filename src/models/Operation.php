@@ -22,7 +22,7 @@ class Operation
 
         // $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%'";
         $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%' AND N_pipelette = '$packetNumber' AND operation_state != 1";
-        // SELECT * FROM `gamme` WHERE DigiTex LIKE 'ISA201-70' AND N_pipelette = "37245840";
+        // SELECT * FROM `gamme` WHERE DigiTex LIKE 'ETC_O1_12' AND N_pipelette = "0000002" AND operation_state != 1;
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
