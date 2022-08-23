@@ -4,9 +4,7 @@ declare(strict_types=1);
 date_default_timezone_set('Africa/Tunis');
 
 require __DIR__ . "./src/config/Database.php";
-require __DIR__ . "./src/config/ErrorHandler.php";
-
-require __DIR__ . "./src/controllers/TimeController.php";
+// require __DIR__ . "./src/config/ErrorHandler.php";
 
 require __DIR__ . "./src/controllers/OperatorController.php";
 require __DIR__ . "./src/controllers/ProductionLineController.php";
@@ -14,7 +12,7 @@ require __DIR__ . "./src/controllers/PacketController.php";
 require __DIR__ . "./src/controllers/OperationController.php";
 require __DIR__ . "./src/controllers/MonitorController.php";
 
-set_exception_handler("ErrorHandler::handleException");
+// set_exception_handler("ErrorHandler::handleException");
 
 // JSON's HEADERS
 header('Access-Control-Allow-Origin: *');
@@ -35,18 +33,16 @@ $action = $parts[4] ?? null;
 $handler = $parts[5] ?? null;
 
 // INITIALIZE DB
-$db = new Database("127.0.0.1", "etc", "root", "");
+$db = new Database("127.0.0.1", "db_etc", "root", "");
 
 // INITIALIZE MODELS
 $operator = new Operator($db);
 $productionLine = new ProductionLine($db);
-// $packet = new Packet($db);
 $packet = new Packet($db);
 $operation = new Operation($db);
 $monitor = new Monitor($db);
 
 // INITIALIZE CONTROLLERS
-$timeController = new TimeController;
 $operatorController = new OperatorController($operator);
 $productionLineController = new ProductionLineController($productionLine);
 $packetController = new PacketController($packet);
@@ -55,14 +51,6 @@ $monitorController = new MonitorController($monitor);
 
 // ROUTING
 switch ($action) {
-    case "date":
-        $timeController->processRequest($handler);
-        break;
-
-    case "time":
-        $timeController->processRequest($handler);
-        break;
-
     case "operator":
         $operatorController->processRequest($handler);
         break;
