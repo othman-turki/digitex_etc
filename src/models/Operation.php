@@ -20,7 +20,6 @@ class Operation
         //     return "{}";
         // }
 
-        // $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%'";
         $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%' AND N_pipelette = '$packetNumber' AND operation_state != 1";
         // SELECT * FROM `gamme` WHERE DigiTex LIKE 'ETC_O1_12' AND N_pipelette = "0000002" AND operation_state != 1;
 
@@ -75,7 +74,6 @@ class Operation
             array_push($opCodesStrList, (int)($op / 10));
         }
 
-
         return array(
             'OF' => $result['OF'],
             'operation_code' => $result['operation_code'],
@@ -113,13 +111,13 @@ class Operation
         $stmt->execute();
         $stmt->closeCursor();
 
-        if (str_contains(strtolower($designation), "contr")) {
-            // echo "yes";
-            $sql2 = "UPDATE controle_packet SET Tag_id = '$tagRFID' WHERE State_Tag = 'here';";
-            $stmt2 = $this->conn->prepare($sql2);
-            $stmt2->execute();
-            $stmt2->closeCursor();
-        }
+        // if (str_contains(strtolower($designation), "contr")) {
+        //     // echo "yes";
+        //     $sql2 = "UPDATE controle_packet SET Tag_id = '$tagRFID' WHERE State_Tag = 'here';";
+        //     $stmt2 = $this->conn->prepare($sql2);
+        //     $stmt2->execute();
+        //     $stmt2->closeCursor();
+        // }
 
         return $stmt->rowCount();
     }
