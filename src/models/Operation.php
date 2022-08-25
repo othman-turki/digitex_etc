@@ -80,7 +80,7 @@ class Operation
             'operation_code_str' => implode(',', $opCodesStrList),
             'designation' => $result['designation'],
             'machine_id' => $result['machine_id'],
-            'QTE_H' => $result['QTE_H'] ?? (string) floor(60 / ((float) $result['tps_ope_uni'])),
+            'QTE_H' => $result['QTE_H'] ?? (string) ceil(60 / ((float) $result['tps_ope_uni'])),
             'tps_ope_uni' => (string) $result['tps_ope_uni'],
             'h_counter' => date("H"),
             'min_counter' => date("i"),
