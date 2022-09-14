@@ -16,22 +16,39 @@ class Operation
 
         // if ($operationExist) {
         //     http_response_code(400);
-
         //     return "{}";
         // }
 
-        $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%' AND N_pipelette = '$packetNumber' AND operation_state != 1";
-        // SELECT * FROM `gamme` WHERE DigiTex LIKE 'ETC_O1_12' AND N_pipelette = "0000002" AND operation_state != 1;
+        // $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%' AND N_pipelette = '$packetNumber' AND operation_state != 1";
+        $sql = "SELECT * FROM gamme WHERE DigiTex LIKE '%$smartBoxName%' AND N_pipelette = '$packetNumber'";
+        // SELECT * FROM `gamme` WHERE DigiTex LIKE '%ETC_01_12%' AND N_pipelette = "0000001" AND operation_state != 1;
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        $results = $stmt->fetchAll();
+        $res = $stmt->fetchAll();
         $stmt->closeCursor();
+
+        if (!$res) {
+            http_response_code(400);
+
+            return "{}";
+        }
+
+        $results = [];
+        for ($i = 0; $i < count($res); $i++) {
+            if ($res[$i]["operation_state"] !== 1) {
+                array_push($results, $res[$i]);
+            }
+        }
+
+        // print_r($results);
 
         if (!$results) {
             http_response_code(400);
 
-            return "{}";
+            return array(
+                "error" => "Tag deja existe"
+            );
         }
 
         $filtred_results = [];
