@@ -30,7 +30,6 @@ class Operation
 
         if (!$res) {
             http_response_code(400);
-
             return "{}";
         }
 
@@ -41,13 +40,10 @@ class Operation
             }
         }
 
-        // print_r($results);
-
         if (!$results) {
             http_response_code(400);
-
             return array(
-                "error" => "Tag deja existe"
+                "error" => "Operation deja effectuee"
             );
         }
 
