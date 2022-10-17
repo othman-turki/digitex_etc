@@ -50,7 +50,7 @@ class Operation
         $filtred_results = [];
         array_push($filtred_results, $results[0]);
         for ($i = 1; $i < count($results); $i++) {
-            if ($results[$i]["id"] === $results[$i - 1]["id"] + 1) {
+            if ($results[$i]["id"] === $filtred_results[count($filtred_results) - 1]["id"] + 1) {
                 array_push($filtred_results, $results[$i]);
             }
         }

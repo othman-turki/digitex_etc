@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types=1);
+// declare(strict_types=1);
 date_default_timezone_set('Africa/Tunis');
 
 require __DIR__ . "./src/config/Database.php";
 // require __DIR__ . "./src/config/ErrorHandler.php";
 
+require __DIR__ . "./src/controllers/DigiTexController.php";
 require __DIR__ . "./src/controllers/OperatorController.php";
 require __DIR__ . "./src/controllers/ProductionLineController.php";
 require __DIR__ . "./src/controllers/PacketController.php";
@@ -36,6 +37,7 @@ $handler = $parts[5] ?? null;
 $db = new Database("127.0.0.1", "db_etc", "root", "");
 
 // INITIALIZE MODELS
+$digitex = new DigiTex($db);
 $operator = new Operator($db);
 $productionLine = new ProductionLine($db);
 $packet = new Packet($db);
@@ -43,6 +45,7 @@ $operation = new Operation($db);
 $monitor = new Monitor($db);
 
 // INITIALIZE CONTROLLERS
+$digitexController = new DigiTexController($digitex);
 $operatorController = new OperatorController($operator);
 $productionLineController = new ProductionLineController($productionLine);
 $packetController = new PacketController($packet);
@@ -51,6 +54,10 @@ $monitorController = new MonitorController($monitor);
 
 // ROUTING
 switch ($action) {
+    case "digitex":
+        $digitexController->processRequest($handler);
+        break;
+
     case "operator":
         $operatorController->processRequest($handler);
         break;
